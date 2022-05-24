@@ -1,4 +1,9 @@
 # setup
+# install docker
+# sudo chmod 666 /var/run/docker.sock
+docker pull tensorflow/tensorflow:1.15.0-gpu-py3
+
+
 # sudo apt-get install python3.6
 # sudo apt-get install python3.6-dev
 python3.6 -m venv ~/rarl_env
