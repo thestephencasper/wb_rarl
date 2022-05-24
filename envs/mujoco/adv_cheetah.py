@@ -8,6 +8,8 @@ from os import path
 from ray.rllib.env.multi_agent_env import MultiAgentEnv
 from visualize.plot_heatmap import cheetah_friction_sweep, cheetah_mass_sweep
 from copy import deepcopy
+
+
 class AdvMAHalfCheetahEnv(HalfCheetahEnv, MultiAgentEnv):
     def __init__(self, config):
         self.horizon = 1000
@@ -373,6 +375,7 @@ class AdvMAHalfCheetahEnv(HalfCheetahEnv, MultiAgentEnv):
                 self.local_num_observed_l2_samples[self.curr_adversary] += 1
 
         return curr_obs
+
 
 def cheetah_env_creator(env_config):
     env = AdvMAHalfCheetahEnv(env_config)
