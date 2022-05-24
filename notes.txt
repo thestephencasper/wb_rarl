@@ -1,0 +1,18 @@
+# setup
+# sudo apt-get install python3.6
+# sudo apt-get install python3.6-dev
+python3.6 -m venv ~/rarl_env
+source ~/rarl_env/bin/activate
+# sudo apt install libosmesa6-dev libgl1-mesa-glx libglfw3
+# download mujoco210 into /root/.mujoco
+# export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/root/.mujoco/mujoco210/bin
+# ln -s /usr/lib/x86_64-linux-gnu/libGL.so.1 /usr/lib/x86_64-linux-gnu/libGL.so
+pip install --upgrade pip
+pip install tensorflow-gpu==1.15.0
+pip install numpy==1.17.1 gym==0.14.0 lz4==2.2.1 requests==2.22.0 \
+matplotlib opencv-python==4.1.0.25 gym==0.14.0 awscli==1.16.259 pytest==5.2.1 \
+ray[tune] ray[rllib] ray==0.8.0 mujoco-py patchelf scipy psutil
+pip install --pre pytz
+pip install --upgrade Pillow
+# edit run_scripts/mujoco/run_adv_mujoco.py to have sys.path.append('/project/robust_RL_multi_adversary/')
+
