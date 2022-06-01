@@ -1,3 +1,10 @@
+TODO
+see how to make the adv observe the agent's inner state
+see the 'cheating' arg for some help on how to modify the adv's observation space
+see what a PPOTFPolicy is
+https://github.com/ray-project/ray/blob/master/rllib/agents/ppo/ppo_tf_policy.py
+
+
 # setup
 # install docker
 # sudo chmod 666 /var/run/docker.sock
@@ -18,9 +25,26 @@ tar -xvf mujoco210-linux-x86_64.tar.gz
 cd /wb_rarl/wb_rarl
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/root/.mujoco/mujoco210/bin
 ln -s /usr/lib/x86_64-linux-gnu/libGL.so.1 /usr/lib/x86_64-linux-gnu/libGL.so
+mkdir results
 
+# 1 adv run
+python run_adv.py --env_name hopper --train_batch_size 100000 --num_iters 700 --checkpoint_freq 2 \
+--num_concat_states 1 --num_adv_strengths 1 --advs_per_strength 1 --advs_per_rew 1 --num_adv_rews 1 --adv_strength 0.25 \
+--exp_title rarl_1_adv --num_cpus 10 --adv_all_actions --concat_actions --lambda_val 1.0 --lr 0.0005 # --run_transfer_tests
 
+# 5 adv run
+python run_adv.py --env_name hopper --train_batch_size 100000 --num_iters 4 --checkpoint_freq 1 \
+--num_concat_states 1 --num_adv_strengths 1 --advs_per_strength 5 --advs_per_rew 1 --num_adv_rews 5 --adv_strength 0.25 \
+--exp_title rarl_5_adv --num_cpus 10 --adv_all_actions --concat_actions --lambda_val 1.0 --lr 0.0005 # --run_transfer_tests
 
+https://github.com/ray-project/ray/issues/7983
+$ ls ~/ray_results/rarl_5_adv
+PPO_0_2022-05-27_03-22-52bv1szbcm  experiment_state-2022-05-27_03-22-52.json
+
+# get results from run
+~/ray_results/rarl_control/experiment_state/* ['checkpoints'][0]['last_result'] keys 'policy_reward_min', 'policy_reward_mean', 'policy_reward_max'
+# get transfer results
+~/transfer_results/adv_robust/*/rarl_control/*
 
 
 

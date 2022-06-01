@@ -1,3 +1,11 @@
+# idea
+# give the env the "exp_title"
+# the experiment will be located in /root/ray_results/exp_title/PPO_0_2022-05-31_22-51-XXXXXXXX/checkpoint_X
+# in the env, load the agent
+# every n_steps, check for an update and load it
+# DONE -- how do I periodically save checkpoints ---- with checkpoint_freq
+# todo -- how do I load checkpoints inside the env. This should hopwfully be easy if I make a distinct exp_title for each run
+
 from copy import deepcopy
 import errno
 from datetime import datetime
@@ -38,6 +46,7 @@ from utils.parsers import init_parser, ray_parser, ma_env_parser
 from utils.rllib_utils import get_config_from_path
 
 from models.recurrent_tf_model_v2 import LSTM
+
 
 def setup_ma_config(config, create_env):
     env = create_env(config['env_config'])
@@ -96,6 +105,7 @@ def setup_exps(args):
     parser = init_parser()
     parser = ray_parser(parser)
     parser = ma_env_parser(parser)
+    parser.add_argument('--checkpoint_freq', default=0, type=int)
     parser.add_argument('--env_name', default='pendulum', const='pendulum', nargs='?', choices=['pendulum', 'hopper', 'cheetah', 'ant'])
     parser.add_argument('--algorithm', default='PPO', type=str, help='Options are PPO, SAC, TD3')
     parser.add_argument('--custom_ppo', action='store_true', default=False, help='If true, we use the PPO with a KL penalty')
@@ -341,7 +351,7 @@ def setup_exps(args):
         'name': args.exp_title,
         'run_or_experiment': runner,
         'trial_name_creator': trial_str_creator,
-        # 'checkpoint_freq': args.checkpoint_freq,
+        'checkpoint_freq': args.checkpoint_freq,
         'checkpoint_at_end': True,
         'stop': stop_dict,
         'config': config,
@@ -401,6 +411,7 @@ def on_episode_end(info):
 
 
 class AlternateTraining(Trainable):
+
     def _setup(self, config):
         self.config = config
         self.env = config['env']
@@ -512,3 +523,4 @@ if __name__ == "__main__":
                             p1.wait(50)
                         except Exception as e:
                             print('This is the error ', e)
+

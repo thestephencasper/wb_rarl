@@ -1,3 +1,6 @@
+# Adapted (but not forked) from Vinitsky et al. 2020
+https://github.com/eugenevinitsky/robust_RL_multi_adversary
+
 # Robust Reinforcement Learning via adversary pools
 We investigate the effect of population based training on the robustness of solutions to the robust MDP.
 

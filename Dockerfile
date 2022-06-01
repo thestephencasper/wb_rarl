@@ -15,7 +15,7 @@ RUN apt-get update && \
 	apt-get update
 RUN pip install --upgrade pip
 RUN pip install numpy==1.17.1 gym==0.14.0 lz4==2.2.1 requests==2.22.0 \
-matplotlib opencv-python==4.1.0.25 gym==0.14.0 awscli==1.16.259 pytest==5.2.1 \
+matplotlib opencv-python==4.1.1.26 gym==0.14.0 awscli==1.16.259 pytest==5.2.1 \
 ray[tune] ray[rllib] ray==0.8.0 mujoco-py patchelf scipy psutil
 RUN pip install tensorflow-gpu==1.15.0
 RUN pip install --pre pytz
